@@ -1,18 +1,34 @@
 {
-  "name": "line-login-tutorial",
+  "name": "line-login-x-firebase-nodejs",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
     "start": "nodemon ./src/index.js"
   },
-  "author": "",
+  "author": "1010code",
   "license": "MIT",
-  "description": "",
+  "description": "使用 web 做 LINE Login 並向 Firebase 註冊取得帳戶",
   "dependencies": {
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "firebase-admin": "^5.12.0",
     "request": "^2.85.0"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/1010code/LINE-Login-x-Firebase-NodeJS.git"
+  },
+  "keywords": [
+    "LINE",
+    "Login",
+    "Firebase"
+  ],
+  "bugs": {
+    "url": "https://github.com/1010code/LINE-Login-x-Firebase-NodeJS/issues"
+  },
+  "homepage": "https://github.com/1010code/LINE-Login-x-Firebase-NodeJS#readme"
 }
