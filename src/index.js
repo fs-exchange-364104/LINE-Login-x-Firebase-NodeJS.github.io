@@ -5,7 +5,7 @@ const lineLogin = require('./route/lineLogin.route');
 require('dotenv').config();
 
 
-app.use('/login', lineLogin);
+app.use('/line/login', lineLogin);
 
 
 

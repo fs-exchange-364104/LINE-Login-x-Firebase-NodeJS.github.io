@@ -9,6 +9,7 @@
   "license": "MIT",
   "description": "使用 web 做 LINE Login 並向 Firebase 註冊取得帳戶",
   "dependencies": {
+    "async": "^2.6.0",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "firebase-admin": "^5.12.0",
