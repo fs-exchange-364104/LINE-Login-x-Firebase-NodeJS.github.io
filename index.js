@@ -21,6 +21,7 @@ app.use("/login/callback",
       function (callback) {
         // Line 登入成功取得 access_token 
         lineUtil.getLineToken(req.query.code).then((result) => {
+          console.log('0->>>>' + JSON.stringify(result));
           callback(null, result.access_token);
         })
 
@@ -29,7 +30,8 @@ app.use("/login/callback",
         console.log(`accessToken: ${accessToken}`);
         // 使用 accessToken 取得 Line 的 userId
         lineUtil.getLineProfile(accessToken).then((result) => {
-          // 取得 profile Line 帳戶資訊 
+          // 取得 profile Line 帳戶資訊
+          console.log('1->>>>' + JSON.stringify(result)); 
           callback(null, result.userId);
         })
       },
