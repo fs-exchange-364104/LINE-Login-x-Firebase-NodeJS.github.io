@@ -14,7 +14,7 @@
 
 登入成功後會使用 async waterflow 依序執行下列事件。
 
-1. 拿取 code 進入 `callback` 路徑並取得 `access_token`。
+1. 拿取 code 進入 `callback` 路徑並取得 `access_token`。
 - getLineToken()
 
 ```js
@@ -62,5 +62,5 @@
 }
 ```
 
-最後完成畫面回傳 Firebase 帳戶資訊
+最後完成畫面回傳 Firebase 帳戶資訊
 <img src="screenshot/img02.png">
