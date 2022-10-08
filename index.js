@@ -7,15 +7,15 @@ const firsebaseUtil = require('./lib/firebaseUtil');
 require('dotenv').config();
 
 // Line Login
-app.use("/line/login",
+app.use('/line/login',
   (req, res, next) => {
     // 首次登入要求取得權限
-    res.location('https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1570726184&redirect_uri=http://localhost:5050/login/callback&state=abcde&scope=openid%20profile');
+    res.location('https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1657538588&redirect_uri=http://localhost:5000/login/callback&state=abcde&scope=openid%20profile');
     res.sendStatus(302);
   });
 
 // Line Login Success and callback
-app.use("/login/callback",
+app.use('/login/callback',
   (req, res, next) => {
     async.waterfall([
       function (callback) {
