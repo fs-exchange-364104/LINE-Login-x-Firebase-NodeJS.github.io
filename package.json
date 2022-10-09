@@ -31,5 +31,8 @@
   "bugs": {
     "url": "https://github.com/1010code/LINE-Login-x-Firebase-NodeJS/issues"
   },
-  "homepage": "https://github.com/fs-exchange-364104/LINE-Login-x-Firebase-NodeJS.github.io#readme"
+  "homepage": "https://github.com/fs-exchange-364104/LINE-Login-x-Firebase-NodeJS.github.io#readme",
+	"engines": {
+		"node": "14"
+	}
 }
