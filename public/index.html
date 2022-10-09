@@ -8,9 +8,9 @@
       var URL = 'https://access.line.me/oauth2/v2.1/authorize?';
       URL += 'response_type=code';
       URL += '&client_id=1657538588';
-      URL += '&redirect_uri=http://localhost:5000/login/callback';
+      URL += '&redirect_uri=https://line-login-firebase-nodejs.herokuapp.com/login/callback';
       URL += '&state=abcde';
-      URL += '&scope=openid%20profile%20email'
+      URL += '&scope=openid%20profile'
       window.location.href = URL;
     }
   </script>

@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "rm -rf node_modules && rm -f package-lock.json && npm install && node index.js"
   },
   "author": "fd-exchange-364104",
   "license": "MIT",

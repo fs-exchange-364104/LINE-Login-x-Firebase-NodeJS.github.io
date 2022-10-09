@@ -10,7 +10,7 @@ require('dotenv').config();
 app.use('/line/login',
   (req, res, next) => {
     // 首次登入要求取得權限
-    res.location('https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1657538588&redirect_uri=http://localhost:5000/login/callback&state=abcde&scope=openid%20profile');
+    res.location('https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1657538588&redirect_uri=https://line-login-firebase-nodejs.herokuapp.com/login/callback&state=abcde&scope=openid%20profile');
     res.sendStatus(302);
   });
 
