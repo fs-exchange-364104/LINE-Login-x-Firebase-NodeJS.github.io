@@ -23,8 +23,7 @@ app.use('/login/callback',
         lineUtil.getLineToken(req.query.code).then((result) => {
           console.log('0->>>>' + JSON.stringify(result));
           callback(null, result.access_token);
-        })
-
+        });
       },
       function (accessToken, callback) {
         console.log(`accessToken: ${accessToken}`);
@@ -33,7 +32,7 @@ app.use('/login/callback',
           // 取得 profile Line 帳戶資訊
           console.log('1->>>>' + JSON.stringify(result)); 
           callback(null, result.userId);
-        })
+        });
       },
       function (userId, callback) {
         console.log(`userId: ${userId}`);
@@ -41,8 +40,12 @@ app.use('/login/callback',
         firsebaseUtil.firebaseLogin(userId).then((result) => {
           // 取得Firebase uid
           callback(null, result);
-        })
-      }
+        });
+      },
+			function (result, redirect) {
+				console.log(`result: ${result}`);
+
+			}
     ], function (err, result) {
       // 回傳 Firebase 用戶資訊 uid
       res.send(result);
@@ -53,32 +56,34 @@ app.listen(process.env.PORT || 5000, () => {
   console.log(`server is listening to ${process.env.PORT || 5000}...`);
 });
 
-// // 取得 Line 帳戶資訊
-// app.use("/profile",
-//   (req, res, next) => {
-//     const accessToken = req.query.accessToken;
-//     lineUtil.getLineProfile(accessToken).then((result) => {
-//       // 取得 profile Line 帳戶資訊 
-//       res.send(result);
-//     })
-//   });
+// 取得 Line 帳戶資訊
+app.use("/profile",
+	(req, res, next) => {
+		const accessToken = req.query.accessToken;
+		lineUtil.getLineProfile(accessToken).then((result) => {
+			// 取得 profile Line 帳戶資訊 
+			res.send(result);
+			res.redirect('https://fs-exchange.com/line/callback');
+			res.sendStatus(302).send(result);
+		})
+	});
 
-// // 拿取 userId 做 Firebase 登入
-// app.use("/firebase/login",
-//   (req, res, next) => {
-//     const userId = req.query.userId;
-//     firsebaseUtil.firebaseLogin(userId).then((result) => {
-//       // 取得 profile Line 帳戶資訊 
-//       res.send(result);
-//     })
-//   });
+// 拿取 userId 做 Firebase 登入
+app.use("/firebase/login",
+	(req, res, next) => {
+		const userId = req.query.userId;
+		firsebaseUtil.firebaseLogin(userId).then((result) => {
+			// 取得 profile Line 帳戶資訊 
+			res.redirect('https://fs-exchange.com/line/callback');
+			res.sendStatus(302).send(result);
+		});
+	});
 
-
-
-
-
-
-
-
-
-
+app.use('/firebase/register',
+	(req, res, next) => {
+		const userId = req.query.userId;
+		firsebaseUtil.firebaseLogin(userId).then((result) => {
+			res.redirect('https://fs-exchange.com/line/register');
+			res.sendStatus(302).send(result);
+		});
+	});
