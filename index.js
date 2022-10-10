@@ -41,11 +41,7 @@ app.use('/login/callback',
           // 取得Firebase uid
           callback(null, result);
         });
-      },
-			function (result, redirect) {
-				console.log(`result: ${result}`);
-
-			}
+      }
     ], function (err, result) {
       // 回傳 Firebase 用戶資訊 uid
       res.send(result);
@@ -73,9 +69,7 @@ app.use("/firebase/login",
 	(req, res, next) => {
 		const userId = req.query.userId;
 		firsebaseUtil.firebaseLogin(userId).then((result) => {
-			// 取得 profile Line 帳戶資訊 
-			res.redirect('https://fs-exchange.com/line/callback');
-			res.sendStatus(302).send(result);
+			res.status(200).send(result).redirect(`https://fs-exchange.firebaseapp.com/users/${result.userId}`);
 		});
 	});
 
