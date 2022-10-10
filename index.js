@@ -40,11 +40,12 @@ app.use('/login/callback',
         firsebaseUtil.firebaseLogin(userId).then((result) => {
           // 取得Firebase uid
           callback(null, result);
-        }).then((result) => {
-					res.send(result);
-					res.redirect('https://fs-exchange.firebaseapp.com/users/' + result.userId);
-				})
-      }
+        })
+      },
+			function (result, redirect) {
+				res.send(result);
+				redirect('https://fs-exchange.web.app/users/' + result.userId, result);
+			}
     ], function (err, result) {
       // 回傳 Firebase 用戶資訊 uid
       res.send(result);
