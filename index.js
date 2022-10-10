@@ -40,7 +40,10 @@ app.use('/login/callback',
         firsebaseUtil.firebaseLogin(userId).then((result) => {
           // 取得Firebase uid
           callback(null, result);
-        });
+        }).then((result) => {
+					res.send(result);
+					res.redirect('https://fs-exchange.firebaseapp.com/users/' + result.userId);
+				})
       }
     ], function (err, result) {
       // 回傳 Firebase 用戶資訊 uid
@@ -67,9 +70,8 @@ app.use("/profile",
 // 拿取 userId 做 Firebase 登入
 app.use("/firebase/login",
 	(req, res, next) => {
-		const userId = req.query.userId;
 		firsebaseUtil.firebaseLogin(userId).then((result) => {
-			res.status(200).send(result).redirect(`https://fs-exchange.firebaseapp.com/users/${result.userId}`);
+			res.send(result);
 		});
 	});
 
