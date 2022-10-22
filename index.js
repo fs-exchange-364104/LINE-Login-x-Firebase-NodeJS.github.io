@@ -10,7 +10,7 @@ require('dotenv').config();
 app.use('/line/login',
   (req, res, next) => {
     // 首次登入要求取得權限
-    res.location('https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1657538588&redirect_uri=https://line-login-firebase-nodejs.herokuapp.com/login/callback&state=abcde&scope=openid%20profile');
+    res.location('https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=1657538588&redirect_uri=https://line-login-firebase-nodejs.herokuapp.com/login/callback&state=abcde&scope=openid%20profile%20email');
     res.sendStatus(302);
   });
 
@@ -27,25 +27,22 @@ app.use('/login/callback',
       },
       function (accessToken, callback) {
         console.log(`accessToken: ${accessToken}`);
-        // 使用 accessToken 取得 Line 的 userId
+        // 使用 accessToken 取得 Line 的 userId , email
         lineUtil.getLineProfile(accessToken).then((result) => {
           // 取得 profile Line 帳戶資訊
           console.log('1->>>>' + JSON.stringify(result)); 
-          callback(null, result.userId);
+          callback(null, result.userId, result.email);
         });
       },
-      function (userId, callback) {
+      function (userId, email, callback) {
         console.log(`userId: ${userId}`);
+	console.log(`email: ${email}`);
         // 使用 Line userId 做 Firsebase 登入，若無此筆資料則新建註冊
-        firsebaseUtil.firebaseLogin(userId).then((result) => {
+        firsebaseUtil.firebaseLogin(userId, email).then((result) => {
           // 取得Firebase uid
           callback(null, result);
         })
-      },
-			function (result, redirect) {
-				res.send(result);
-				redirect('https://fs-exchange.web.app/users/' + result.userId, result);
-			}
+      }
     ], function (err, result) {
       // 回傳 Firebase 用戶資訊 uid
       res.send(result);
@@ -57,30 +54,30 @@ app.listen(process.env.PORT || 5000, () => {
 });
 
 // 取得 Line 帳戶資訊
-app.use("/profile",
-	(req, res, next) => {
-		const accessToken = req.query.accessToken;
-		lineUtil.getLineProfile(accessToken).then((result) => {
-			// 取得 profile Line 帳戶資訊 
-			res.send(result);
-			res.redirect('https://fs-exchange.com/line/callback');
-			res.sendStatus(302).send(result);
-		})
-	});
+//app.use("/profile",
+//	(req, res, next) => {
+//		const accessToken = req.query.accessToken;
+//		lineUtil.getLineProfile(accessToken).then((result) => {
+//			// 取得 profile Line 帳戶資訊 
+//			res.send(result);
+//			res.redirect('https://fs-exchange.com/line/callback');
+//			res.sendStatus(302).send(result);
+//		})
+//	});
 
 // 拿取 userId 做 Firebase 登入
-app.use("/firebase/login",
-	(req, res, next) => {
-		firsebaseUtil.firebaseLogin(userId).then((result) => {
-			res.send(result);
-		});
-	});
+//app.use("/firebase/login",
+//	(req, res, next) => {
+//		firsebaseUtil.firebaseLogin(userId).then((result) => {
+//			res.send(result);
+//		});
+//	});
 
-app.use('/firebase/register',
-	(req, res, next) => {
-		const userId = req.query.userId;
-		firsebaseUtil.firebaseLogin(userId).then((result) => {
-			res.redirect('https://fs-exchange.com/line/register');
-			res.sendStatus(302).send(result);
-		});
-	});
+//app.use('/firebase/register',
+//	(req, res, next) => {
+//		const userId = req.query.userId;
+//		firsebaseUtil.firebaseLogin(userId).then((result) => {
+//			res.redirect('https://fs-exchange.com/line/register');
+//			res.sendStatus(302).send(result);
+//		});
+//	});
